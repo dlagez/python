@@ -2,6 +2,7 @@ import os
 import random
 import glob
 
+# 将数据集分类训练集和测试集，并将文件名写入txt文件
 BASE = '/Volumes/roczhang/code/python/pytorch_classification/data/'
 traindata_path = BASE + 'train'
 labels = os.listdir(traindata_path)
