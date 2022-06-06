@@ -5,6 +5,10 @@ img = cv.imread('/Volumes/roczhang/data/opencv-img/messi5.jpg')
 px = img[100, 100]
 blue = img[100, 100]
 img[100,100] = [255,255,255]
+# cv.imshow("messi", img)
+# cv.waitKey()
+# cv.destroyAllWindows()
+cv.imwrite('messi6.jpg', img)
 
 print( img.shape )
 print( img.size )
