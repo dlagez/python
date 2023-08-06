@@ -3,9 +3,15 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 # 读取Excel文件
-di = pd.read_excel('data/di_row100_column2.xlsx')
-ding = pd.read_excel('data/ding_row100_column2.xlsx')
-erbu = pd.read_excel('data/erbu_row100_column5.xlsx')
+# di = pd.read_excel('data/di_row100_column2.xlsx')
+# ding = pd.read_excel('data/ding_row100_column2.xlsx')
+# erbu = pd.read_excel('data/erbu_row100_column5.xlsx')
+
+
+di = pd.read_excel('data/di.xlsx', dtype=str)
+ding = pd.read_excel('data/ding.xlsx', dtype=str)
+erbu = pd.read_excel('data/erbu.xlsx', dtype=str)
+
 
 
 # 创建一个无向图
