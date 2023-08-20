@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 
 # 这个文件画出来的图是一类节点作为内环，一类节点作为外环
 
-xlsx_names = ['data/di_year2009_com0_20.xlsx', 
-              'data/ding_year2009_com0_20.xlsx', 
-              'data/erbu_year2009_com0_20.xlsx']
+xlsx_names = ['data/di_year2009_com0_10.xlsx', 
+              'data/ding_year2009_com0_10.xlsx', 
+              'data/erbu_year2009_com0_10.xlsx']
 
 di = pd.read_excel(xlsx_names[0], usecols=['人员ID'])
 ding = pd.read_excel(xlsx_names[1], usecols=['股票代码'])
@@ -29,7 +29,7 @@ G.add_nodes_from(outer_nodes, ring='outer')
 G.add_edges_from(erbu_data)
 
 # 绘制图形 scale调整节点之间的距离。增加 scale 的值会使节点之间的距离更大。
-pos = nx.shell_layout(G, nlist=[inner_nodes, outer_nodes], scale=10)
+pos = nx.shell_layout(G, nlist=[inner_nodes, outer_nodes], scale=1)
 
 # 绘制图形
 
