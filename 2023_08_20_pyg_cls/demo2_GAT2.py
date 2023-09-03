@@ -4,7 +4,7 @@ import torch.nn.functional as F
 from torch_geometric.nn import GCNConv, SAGEConv, GATConv
 
 dataset = Planetoid(root='/tmp/Cora', name='Cora')
-
+dataset.data
 class GAT_Net(torch.nn.Module):
     def __init__(self, features, hidden, classes, heads=1):
         super(GAT_Net, self).__init__()
