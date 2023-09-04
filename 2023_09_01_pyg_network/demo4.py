@@ -17,6 +17,12 @@ class CustomDataset(InMemoryDataset):
         # 这里可以放置下载数据的代码（如果需要）
         pass
 
+    def raw_file_names(self):
+        return ['aaa']
+
+    def processed_file_names(self):
+        return ['data']
+
     def process(self):
         # 这里可以对数据进行预处理
         # x = torch.randn(10, 16)  # 节点特征矩阵
@@ -30,22 +36,27 @@ class CustomDataset(InMemoryDataset):
         tag_node_features = torch.tensor(tag_your_node_features, dtype=torch.float32)
         # flag
         tag_flag_your_node_features = tag_df['违规公司'].to_numpy()
-        
+        tag_flag_your_node_features.shape
 
         # 定义人节点信息
         di_file = r'data/top 100 di.xlsx'  # 将 'your_data.xlsx' 替换为你的 Excel 文件路径
         di_df = pd.read_excel(di_file)
-        di_feature_columns = ['人员ID', '年份', '职务类别', '年龄']  # 根据实际列名替换
+        di_feature_columns = ['人员ID', '年份', '是否领取薪酬', '年龄']  # 根据实际列名替换
         di_your_node_features = di_df[di_feature_columns].to_numpy()
+        # di_df.info()
         di_node_features = torch.tensor(di_your_node_features, dtype=torch.float32)
         # flag
-        di_flag = np.zeros((di_your_node_features.shape[0], 1))
+        di_flag = np.zeros((di_your_node_features.shape[0]))
+        # di_flag.shape
 
 
         # 拼接节点信息
         feature_result = torch.vstack((tag_node_features, di_node_features))
+        feature_result = torch.tensor(feature_result, dtype=torch.float32)
         # 拼接标签信息
         flag_result = np.vstack((tag_flag_your_node_features, di_flag))
+        flag_result = torch.tensor(flag_result, dtype=torch.float32)
+
 
         x = feature_result
         y = flag_result
@@ -54,7 +65,7 @@ class CustomDataset(InMemoryDataset):
         # 定义边信息
         erbu_file = r'data/top 100 erbu.xlsx'  # 将 'your_data.xlsx' 替换为你的 Excel 文件路径
         erbu_df = pd.read_excel(erbu_file)
-        erbu_feature_columns = ['股票代码', '人员ID'] # 根据实际列名替换
+        erbu_feature_columns = ['证券代码', '人员ID'] # 根据实际列名替换
         erbu_your_node_features = erbu_df[erbu_feature_columns].to_numpy()
         edge_index = torch.tensor(erbu_your_node_features, dtype=torch.float32)
 
@@ -85,7 +96,7 @@ class GAT_Net(torch.nn.Module):
         return F.log_softmax(x, dim=1)
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-model = GAT_Net(dataset.num_node_features, 16, dataset.num_classes, heads=4).to(device)
+model = GAT_Net(4, 16, 2, heads=1).to(device)
 data = dataset[0]
 data
 
