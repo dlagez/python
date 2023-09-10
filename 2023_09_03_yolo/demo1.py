@@ -14,3 +14,6 @@ print(results[0].boxes)
 print(results[0].masks)
 render = render_result(model=model, image=image, result=results[0])
 display.display(render)
+
+import torch
+torch.cuda.is_available()
