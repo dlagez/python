@@ -11,6 +11,7 @@ tag_df.info()
 
 code_list = [5, 2]
 year_list = [2016, 2009]
+year_target = 2010
 
 # 找到违规公司
 tag1 = tag_df.loc[tag_df['违规公司'].isin([1]) & tag_df['股票代码'].isin(code_list) & tag_df['年份'].isin(year_list), :]
@@ -28,14 +29,29 @@ erbu_df.info()
 # 筛选出指定年份违规公司的高管
 
 person_set = set()
+personDf_list = []
 
 print("查询指定年份舞弊公司下的高管....")
 for index, row in tag1.iterrows():
     code = row['股票代码']
     year = row['年份']
     person_df = erbu_df.loc[erbu_df['证券代码'].isin([code]) & erbu_df['年份'].isin([year])]
+    personDf_list.append(person_df)
     person_numpy = person_df['人员ID'].to_numpy()
     person_set.update(person_numpy.tolist())
+
+result = pd.concat(personDf_list)
+
+company_list = []
+# 如果有符合条件的公司，并且高管人数大于0
+if len(result) > 0:
+    for index, row in result.iterrows():
+        id = row['人员ID']
+        year = row['年份']
+        company_df = erbu_df.loc[erbu_df['人员ID'].isin(id) & erbu_df['年份'].isin(year)]
+        company_list.append(company_df)
+
+company_result = pd.concat(company_list)
 
 
 len(person_set)
@@ -48,3 +64,6 @@ if len(tag1) > 5:
     tag1.sample(5)
 elif len(tag1) > 1:
     tag1.sample(1)
+
+print('找到符合条件指定年份的公司如下')
+company_result.sample(1)
