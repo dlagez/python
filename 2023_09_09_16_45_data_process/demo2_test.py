@@ -9,20 +9,18 @@ erbu_file = r'c:\Users\roc\OneDrive\Documents\05 WHPU\zen\data\原始数据拷�
 tag_df = pd.read_excel(tag_file, dtype={"股票代码":int, '年份': int})
 tag_df.info()
 
+code_list = [5, 2]
+year_list = [2016, 2009]
 
 # 找到违规公司
-tag1 = tag_df.loc[tag_df['违规公司'].isin([1]) & tag_df['股票代码'].isin([5, 2]) & tag_df['年份'].isin([2016, 2009]), :]
+tag1 = tag_df.loc[tag_df['违规公司'].isin([1]) & tag_df['股票代码'].isin(code_list) & tag_df['年份'].isin(year_list), :]
 # 有了违规公司的股票代码和违规年份
 # 行不通
 tag1_code_numpy = tag1['股票代码'].to_numpy()
 tag1_code_numpy = tag1['年份'].to_numpy()
 type(tag1)
 
-print("如果有符合条件的违规公司，下面会显示的公司在指定年份的信息")
-if len(tag1) > 1:
-    tag1.sample(2)
-elif len(tag1) == 1:
-    tag1.sample(1)
+
 
 erbu_df = pd.read_excel(erbu_file)
 erbu_df.info()
@@ -31,6 +29,7 @@ erbu_df.info()
 
 person_set = set()
 
+print("查询指定年份舞弊公司下的高管....")
 for index, row in tag1.iterrows():
     code = row['股票代码']
     year = row['年份']
@@ -40,3 +39,12 @@ for index, row in tag1.iterrows():
 
 
 len(person_set)
+print("找到的舞弊公司高管的id如下")
+print(person_set)
+print()
+print("找到的舞弊公司如下:")
+print("如果有符合条件的违规公司，下面会显示的公司在指定年份的信息")
+if len(tag1) > 5:
+    tag1.sample(5)
+elif len(tag1) > 1:
+    tag1.sample(1)
