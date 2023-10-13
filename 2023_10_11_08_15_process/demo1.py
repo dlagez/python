@@ -17,6 +17,7 @@ erbu_df.info()
 
 code = [5, 2]
 year = [2016, 2009]
+target_year = 2017
 
 # 找到违规公司
 tag1 = tag_df.loc[tag_df['违规公司'].isin([1]) & tag_df['股票代码'].isin(code) & tag_df['年份'].isin(year), :]
@@ -26,6 +27,7 @@ tag1.info()
 
 person_set = set()
 
+# 获取到人员id的集合。
 for index, row in tag1.iterrows():
     code = row['股票代码']
     year = row['年份']
@@ -35,3 +37,5 @@ for index, row in tag1.iterrows():
 
 
 
+# 根据人员id和指定的年份获得指定的公司。
+erbu_df.loc[(erbu_df['年份']==target_year) & erbu_df['人员ID'].isin(person_set)]
