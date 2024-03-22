@@ -8,14 +8,16 @@
 from itemadapter import ItemAdapter
 import pandas as pd
 
-class TutorialPipeline:
+class ExcelPipeline:
     def __init__(self):
-        self.links = []
+        self.result_data = []
 
     def process_item(self, item, spider):
-        self.links.append(item['link'])
+        self.result_data.append(item)
         return item
-    
+
     def close_spider(self, spider):
-        df = pd.DataFrame({'Link': self.links})
-        df.to_excel('links.xlsx', index=False)
+        # 在Spider关闭时保存数据到Excel文件
+        df = pd.DataFrame(self.result_data)
+        df.to_excel('output.xlsx', index=False)
+
