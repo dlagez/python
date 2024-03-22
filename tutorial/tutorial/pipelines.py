@@ -19,22 +19,20 @@ class ExcelPipeline:
         self.result_data = []
 
     def process_item(self, item, spider):
-        self.result_data.append(item)
+        if self.contains_keywords(item):
+            self.result_data.append(item)
         return item
 
     def close_spider(self, spider):
-        if self.result_data:
-            titles = []
-            data_lists = []
-            links = []
-            for item in self.result_data:
-                titles.append(item['title'])
-                data_lists.append(item['data_list'])
-                links.append(item['link'])
-            
-            df = pd.DataFrame({
-                'Title': titles,
-                'Data List': data_lists,
-                'Link': links
-            })
-            df.to_excel('output.xlsx', index=False)
+        # 将数据转换为DataFrame并保存为Excel文件
+        df = pd.DataFrame(self.result_data)
+        df.to_excel('output.xlsx', index=False)
+
+    def contains_keywords(self, item):
+        # 定义关键字列表
+        keywords = ['omic', 'genomic', 'transcriptomic', 'epigenomic', 'single-cell', 'metagenomics', 'microbiome', 'cancer', 'tumor', 'RNA-seq', 'DNA', 'RNA', 'genom*', 'epigen*']
+        # 检查关键字是否在文本中
+        for keyword in keywords:
+            if keyword.lower() in item['text'].lower():
+                return True
+        return False
