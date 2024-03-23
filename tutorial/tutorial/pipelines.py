@@ -24,15 +24,18 @@ class ExcelPipeline:
         return item
 
     def close_spider(self, spider):
+        # 设置 Pandas 显示选项
+        pd.set_option('display.max_colwidth', None)
+
         # 将数据转换为DataFrame并保存为Excel文件
         df = pd.DataFrame(self.result_data)
-        df.to_excel('output.xlsx', index=False)
+        df.to_excel('output3.xlsx', index=False)
 
     def contains_keywords(self, item):
         # 定义关键字列表
         keywords = ['omic', 'genomic', 'transcriptomic', 'epigenomic', 'single-cell', 'metagenomics', 'microbiome', 'cancer', 'tumor', 'RNA-seq', 'DNA', 'RNA', 'genom*', 'epigen*']
         # 检查关键字是否在文本中
         for keyword in keywords:
-            if keyword.lower() in item['text'].lower():
+            if keyword.lower() in item['abstract_text'].lower():
                 return True
         return False
