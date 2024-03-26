@@ -25,7 +25,7 @@ class MySpider(scrapy.Spider):
             title = row.xpath('.//td[1]/a/text()').extract_first()
             if link and title:
                 print("第一步：organization链接：" + link)
-                org_id = link.split('(')[1].split(',')[0]
+                org_id = link.split('(')[1].split(',')[0].strip("'")
                 new_link = f"https://report.nih.gov/award/index.cfm?ot=&fy=2024&state=MA,NJ,NY&ic=&fm=&orgid={org_id}&distr=&rfa=&om=n&pid=#tab5"
                 print("第一步：data页面链接是：" + new_link)
                 # yield {'title': title, 'link': new_link}

@@ -19,7 +19,9 @@ class ExcelPipeline:
         self.result_data = []
 
     def process_item(self, item, spider):
-        if self.contains_keywords(item):
+        matched_keywords = self.contains_keywords(item)
+        item['matched_keywords'] = matched_keywords
+        if matched_keywords:
             self.result_data.append(item)
         return item
 
@@ -29,13 +31,14 @@ class ExcelPipeline:
 
         # 将数据转换为DataFrame并保存为Excel文件
         df = pd.DataFrame(self.result_data)
-        df.to_excel('output3.xlsx', index=False)
+        df.to_excel('output4.xlsx', index=False)
 
     def contains_keywords(self, item):
         # 定义关键字列表
         keywords = ['omic', 'genomic', 'transcriptomic', 'epigenomic', 'single-cell', 'metagenomics', 'microbiome', 'cancer', 'tumor', 'RNA-seq', 'DNA', 'RNA', 'genom*', 'epigen*']
+        matched_keywords = []
         # 检查关键字是否在文本中
         for keyword in keywords:
             if keyword.lower() in item['abstract_text'].lower():
-                return True
-        return False
+                matched_keywords.append(keyword)
+        return matched_keywords if matched_keywords else None
