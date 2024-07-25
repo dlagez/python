@@ -17,7 +17,7 @@ labels = data['是否有蓝藻']
 labels
 
 # 划分训练集和测试集
-X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.3, random_state=50)
 
 # 创建并训练随机森林模型
 rf_model = RandomForestClassifier(n_estimators=100, random_state=42)

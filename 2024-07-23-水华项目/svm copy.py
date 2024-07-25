@@ -1,13 +1,11 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.neural_network import MLPClassifier
+from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, classification_report
+from sklearn.decomposition import PCA
 
 # 读取数据
 data = pd.read_csv('data/shuihua.csv', sep='\t')
-
-# 查看数据前几行
-print(data.head())
 
 
 # 特征和标签
@@ -17,14 +15,25 @@ labels = data['是否有蓝藻']
 labels
 
 # 划分训练集和测试集
-X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.1, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.2, random_state=42)
 
-# 创建并训练BP神经网络模型
-mlp = MLPClassifier(hidden_layer_sizes=(10, 10, 10), max_iter=1000)
-mlp.fit(X_train, y_train)
+feature_names = X_train.columns
+
+# PCA降维
+pca = PCA(n_components=6)  # 选择适当的降维后特征数
+X_train_pca = pca.fit_transform(X_train)
+X_test_pca = pca.transform(X_test)
+
+# # 打印每个主成分与原始特征之间的关系
+# print(pd.DataFrame(X_train_pca).head())
+# pd.DataFrame(pca.components_, columns=feature_names, index=[f'PC{i+1}' for i in range(5)]).head()
+
+# 创建并训练SVM模型
+svm_model = SVC(kernel='linear')
+svm_model.fit(X_train_pca, y_train)
 
 # 预测
-y_pred = mlp.predict(X_test)
+y_pred = svm_model.predict(X_test_pca)
 
 # 评估模型
 accuracy = accuracy_score(y_test, y_pred)
@@ -51,7 +60,7 @@ print(report)
 # weighted avg 是所有类别指标的加权平均值，其中权重为各个类别的支持数。
 
 
-# 实验结果1
+# Classification Report:
 #               precision    recall  f1-score   support
 
 #            0       0.75      0.75      0.75         4
