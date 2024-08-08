@@ -3,6 +3,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, classification_report
 from sklearn.decomposition import PCA
+import joblib
 
 # 读取数据
 data = pd.read_csv('data/shuihua.csv', sep='\t')
@@ -31,6 +32,9 @@ X_test_pca = pca.transform(X_test)
 # 创建并训练SVM模型
 svm_model = SVC(kernel='linear')
 svm_model.fit(X_train_pca, y_train)
+
+# 保存模型
+joblib.dump(svm_model, 'model/svm_model.pkl')
 
 # 预测
 y_pred = svm_model.predict(X_test_pca)

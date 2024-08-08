@@ -2,6 +2,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score, classification_report
+import joblib
 
 # 读取数据
 data = pd.read_csv('data/shuihua.csv', sep='\t')
@@ -25,6 +26,10 @@ mlp.fit(X_train, y_train)
 
 # 预测
 y_pred = mlp.predict(X_test)
+
+
+# 保存模型
+joblib.dump(mlp, 'model/mlp_model.pkl')
 
 # 评估模型
 accuracy = accuracy_score(y_test, y_pred)
