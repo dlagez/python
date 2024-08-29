@@ -41,6 +41,8 @@ model.compile(optimizer='adam', loss='mean_squared_error')
 # 训练模型
 model.fit(X_train, Y_train.reshape(Y_train.shape[0], -1), epochs=20, batch_size=1)
 
+model.save('data/sh/model/lstm_model.h5')
+
 # 预测未来7天的数据
 last_14_days = X_test[-1]  # 使用测试集最后14天的数据来预测未来7天
 prediction = model.predict(np.array([last_14_days]))
