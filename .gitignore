@@ -13,3 +13,5 @@ __pycache__
 *.json
 *.sql
 *.h5
+*.keras
+*.csv
