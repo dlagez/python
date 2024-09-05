@@ -65,7 +65,7 @@ prediction_filename = f'data/sh/result/prediction_results_{current_time}.csv'
 prediction_df.to_csv(prediction_filename, index=False)
 
 # 打印预测结果
-print(prediction)
+print(prediction)   
 
 
 # 加载SVM模型
@@ -82,7 +82,13 @@ else:
         svm_predictions = loaded_svm_model.predict(prediction_df)
         
         # 将预测结果拼接到DataFrame中
-        prediction_df['是否有水华'] = svm_predictions
+        # prediction_df['是否有水华'] = svm_predictions
+
+        # 将 0 和 1 转换为 "无" 和 "有"
+        svm_predictions_str = ['无' if pred == 0 else '有' for pred in svm_predictions]
+
+        # 将转换后的预测结果拼接到DataFrame中
+        prediction_df['是否有水华'] = svm_predictions_str
         
         # 保存最终结果到CSV文件
         # 生成文件名并保存预测结果
