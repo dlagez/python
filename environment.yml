@@ -115,4 +115,3 @@ dependencies:
       - urllib3==2.2.2
       - werkzeug==3.0.4
       - wrapt==1.16.0
-prefix: C:\Users\admin\miniconda3\envs\tensorflow
