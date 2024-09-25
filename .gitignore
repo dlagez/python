@@ -16,3 +16,4 @@ __pycache__
 *.keras
 *.csv
 *.pkl
+*.xls

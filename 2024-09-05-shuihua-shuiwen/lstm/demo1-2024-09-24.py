@@ -5,14 +5,19 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense, ReLU
 from datetime import datetime
 
+# 2024-09-24全量水文数据，训练lstm模型
+
 # 2024-09-05 训练lstm模型，并保存模型
 # 设置打印选项：精度为3位小数，禁用科学计数法
 np.set_printoptions(precision=3, suppress=True)
 
 # 假设数据已经加载到DataFrame中
-df = pd.read_csv('data/sh/Book1.csv')
-data/sh/2024-09-24-data/sw.xls
+df = pd.read_excel('data/sh/2024-09-24-data/sw.xls')
+
 # 提取相关特征（假设已经有数据）
+df.columns = ['时间', '风速（km/h）', '降雨量（mm）', '相对湿度（%）', '气温（℃）', '光照时长（h）', '是否有水华']
+
+# 选择所需的列
 data = df[['气温（℃）', '相对湿度（%）', '降雨量（mm）', '风速（km/h）', '光照时长（h）']].values
 
 # 数据归一化
@@ -63,7 +68,7 @@ prediction = scaler.inverse_transform(prediction)
 prediction_df = pd.DataFrame(prediction, columns=['气温（℃）', '相对湿度（%）', '降雨量（mm）', '风速（km/h）', '光照时长（h）'])
 
 # 保存预测结果到一个新的CSV文件
-prediction_df.to_csv(f'2024-09-05-水华项目-水文/result/prediction_results_lstm_{current_time}.csv', index=False)
+prediction_df.to_csv(f'2024-09-05-shuihua-shuiwen/result/prediction_results_lstm_{current_time}.csv', index=False)
 
 # 打印预测结果
 print(prediction)
