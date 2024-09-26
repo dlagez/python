@@ -10,14 +10,13 @@ import numpy as np
 from datetime import datetime
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
-# 使用债券代码、'Sperchge', 'Cnvtvalu', 'Cvtprmrt'四个因子进行训练
-# 使用普通模型
+# 去掉债券代码测试 
 
 # 加载数据
 df = pd.read_excel('data/2024-09-24-kzz/result/processed_data_20240924_152213.xlsx')
 
 # 选择因子与目标变量
-X = df[['Liscd', 'Sperchge', 'Cnvtvalu', 'Cvtprmrt']]
+X = df[['Sperchge', 'Cnvtvalu', 'Cvtprmrt']]
 y = df['Clsprc']  # 假设你要预测 Opnprc
 
 scaler = StandardScaler()
@@ -60,9 +59,8 @@ def print_regression_metrics(y_true, y_pred, dataset_name):
 
 # 打印评价信息
 # print_regression_metrics(y_train, model.predict(X_train), "训练集")
+# print_regression_metrics(y_val, model.predict(X_val), "验证集")
 print_regression_metrics(y_test, y_pred, "测试集")
-print_regression_metrics(y_val, model.predict(X_val), "验证集")
-
 
 current_time = datetime.now().strftime('%Y%m%d_%H%M%S')
 # joblib.dump(model, f'2024-09-24-kzz/model/model_{current_time}.pkl')
