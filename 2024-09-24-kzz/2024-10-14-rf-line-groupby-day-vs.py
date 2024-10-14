@@ -16,15 +16,15 @@ df2['Trddt'] = pd.to_datetime(df2['Trddt'])
 plt.figure(figsize=(10, 6))
 
 # 绘制 df 的 MSE
-plt.plot(df['Trddt'], df['MSE'], label='MSE - RandomForestRegressor', color='b')
+plt.plot(df['Trddt'], df['MSE'], label='MAPE - RandomForestRegressor', color='b')
 
 # 绘制 df2 的 MSE
-plt.plot(df2['Trddt'], df2['MSE'], label='MSE - LinearRegression', color='g', linestyle='--')
+plt.plot(df2['Trddt'], df2['MSE'], label='MAPE - LinearRegression', color='g', linestyle='--')
 
 # 设置标题和标签
-plt.title('MSE Comparison over Time')
+plt.title('MAPE Comparison over Time')
 plt.xlabel('Date')
-plt.ylabel('MSE')
+plt.ylabel('MAPE')
 
 # 显示图例
 plt.legend()

@@ -47,7 +47,8 @@ results = pd.DataFrame({
 
 
 # 通过 Trddt 分组并计算每组的 MSE
-mse_per_day = results.groupby('Trddt').apply(lambda x: mean_squared_error(x['y'], x['y_pred']))
+mse_per_day = results.groupby('Trddt').apply(lambda x: np.mean(np.abs((x['y'] - x['y_pred']) / x['y'])) * 100)
+
 # 将结果转换为 DataFrame，方便查看和保存
 mse_per_day_df = mse_per_day.reset_index()
 mse_per_day_df.columns = ['Trddt', 'MSE']  # 重命名列
