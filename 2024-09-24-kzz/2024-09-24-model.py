@@ -70,3 +70,4 @@ print_regression_metrics(y_val, model.predict(X_val), "验证集")
 
 current_time = datetime.now().strftime('%Y%m%d_%H%M%S')
 joblib.dump(model, f'2024-09-24-kzz/model/model_RandomForestRegressor_{current_time}.pkl')
+joblib.dump(scaler, f'2024-09-24-kzz/scaler/scaler_RandomForestRegressor_{current_time}.pkl')

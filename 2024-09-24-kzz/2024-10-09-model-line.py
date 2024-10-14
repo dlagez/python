@@ -71,7 +71,7 @@ print_regression_metrics(y_val, model.predict(X_val), "验证集")
 
 current_time = datetime.now().strftime('%Y%m%d_%H%M%S')
 joblib.dump(model, f'2024-09-24-kzz/model/model_LinearRegression_{current_time}.pkl')
-
+joblib.dump(scaler, f'2024-09-24-kzz/scaler/scaler_LinearRegression_{current_time}.pkl')
 # (tensorflow) D:\code\python>C:/Users/admin/miniconda3/envs/tensorflow/python.exe d:/code/python/2024-09-24-kzz/2024-10-09-model-line.py  
 # Train Score: 0.95225105717875, Validation Score: 0.9511208028193258, Test Score: 0.9541490708504397
 # 测试集 评价指标：
