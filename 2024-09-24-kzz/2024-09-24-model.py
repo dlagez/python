@@ -50,11 +50,15 @@ def print_regression_metrics(y_true, y_pred, dataset_name):
     mae = mean_absolute_error(y_true, y_pred)
     r2 = r2_score(y_true, y_pred)
     
+    # 计算 MAPE
+    mape = np.mean(np.abs((y_true - y_pred) / y_true)) * 100  # 计算 MAPE
+
     print(f"{dataset_name} 评价指标：")
     print(f"均方误差 (MSE): {mse:.4f}")
     print(f"均方根误差 (RMSE): {rmse:.4f}")  # 打印 RMSE
     print(f"平均绝对误差 (MAE): {mae:.4f}")
     print(f"R^2 分数: {r2:.4f}")
+    print(f"平均绝对百分比误差 (MAPE): {mape:.4f}%")  # 打印 MAPE
     print("-" * 40)
 
 
@@ -65,4 +69,4 @@ print_regression_metrics(y_val, model.predict(X_val), "验证集")
 
 
 current_time = datetime.now().strftime('%Y%m%d_%H%M%S')
-joblib.dump(model, f'2024-09-24-kzz/model/model_{current_time}.pkl')
+joblib.dump(model, f'2024-09-24-kzz/model/model_RandomForestRegressor_{current_time}.pkl')

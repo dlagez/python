@@ -10,6 +10,7 @@ import joblib
 import numpy as np
 from datetime import datetime
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+import matplotlib.pyplot as plt
 
 # 使用债券代码、'Sperchge', 'Cnvtvalu', 'Cvtprmrt'四个因子进行训练
 # 使用普通模型
@@ -21,6 +22,7 @@ df = pd.read_excel('data/2024-09-24-kzz/result/processed_data_20240924_152213.xl
 X = df[['Liscd', 'Sperchge', 'Cnvtvalu', 'Cvtprmrt']]
 y = df['Clsprc']  # 假设你要预测 Opnprc
 
+df['Trddt'] = pd.to_datetime(df['Trddt'])
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
@@ -38,39 +40,25 @@ model.fit(X_train, y_train)
 # 进行预测
 y_pred = model.predict(X_test)
 
-# 计算得分
-train_score = model.score(X_train, y_train)
-val_score = model.score(X_val, y_val)
-test_score = model.score(X_test, y_test)
-print(f'Train Score: {train_score}, Validation Score: {val_score}, Test Score: {test_score}')
 
-# 打印回归评价指标
-def print_regression_metrics(y_true, y_pred, dataset_name):
-    mse = mean_squared_error(y_true, y_pred)
-    rmse = np.sqrt(mse)  # 计算均方根误差
-    mae = mean_absolute_error(y_true, y_pred)
-    r2 = r2_score(y_true, y_pred)
+def plot_prediction_vs_true(y_true, y_pred, dataset_name):
+    plt.figure(figsize=(10, 6))
     
-        # 计算 MAPE
-    mape = np.mean(np.abs((y_true - y_pred) / y_true)) * 100  # 计算 MAPE
-
-    print(f"{dataset_name} 评价指标：")
-    print(f"均方误差 (MSE): {mse:.4f}")
-    print(f"均方根误差 (RMSE): {rmse:.4f}")  # 打印 RMSE
-    print(f"平均绝对误差 (MAE): {mae:.4f}")
-    print(f"R^2 分数: {r2:.4f}")
-    print(f"平均绝对百分比误差 (MAPE): {mape:.4f}%")  # 打印 MAPE
-    print("-" * 40)
-
-
-# 打印评价信息
-# print_regression_metrics(y_train, model.predict(X_train), "训练集")
-print_regression_metrics(y_test, y_pred, "测试集")
-print_regression_metrics(y_val, model.predict(X_val), "验证集")
+    plt.scatter(y_true, y_pred, color='blue', edgecolors='k', alpha=0.7, label="Predictions")
+    plt.plot([y_true.min(), y_true.max()], [y_true.min(), y_true.max()], 'r--', lw=2, label="True values")
+    
+    plt.xlabel("True Values")
+    plt.ylabel("Predicted Values")
+    plt.title(f"{dataset_name} - True vs Predicted Values")
+    plt.legend()
+    plt.grid(True)
+    
+    plt.show()
 
 
-current_time = datetime.now().strftime('%Y%m%d_%H%M%S')
-joblib.dump(model, f'2024-09-24-kzz/model/model_LinearRegression_{current_time}.pkl')
+# 进行绘图
+y_val_pred = model.predict(X_val)
+plot_prediction_vs_true(y_val, y_val_pred, "验证集")
 
 # (tensorflow) D:\code\python>C:/Users/admin/miniconda3/envs/tensorflow/python.exe d:/code/python/2024-09-24-kzz/2024-10-09-model-line.py  
 # Train Score: 0.95225105717875, Validation Score: 0.9511208028193258, Test Score: 0.9541490708504397
