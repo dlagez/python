@@ -5,8 +5,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense, ReLU
 from datetime import datetime
 
-# 2024-09-24全量水文数据，训练lstm模型
-# 代码有问题，当时没搞出来
+# 2024-11-19 全量水文数据，训练lstm模型
 
 # 2024-09-05 训练lstm模型，并保存模型
 # 设置打印选项：精度为3位小数，禁用科学计数法
@@ -16,10 +15,10 @@ np.set_printoptions(precision=3, suppress=True)
 df = pd.read_excel('data/sh/2024-09-24-data/sw.xls')
 
 # 提取相关特征（假设已经有数据）
-df.columns = ['时间', '风速（km/h）', '降雨量（mm）', '相对湿度（%）', '气温（℃）', '光照时长（h）', '是否有水华']
+df.columns = ['时间', '风速', '降雨量', '相对湿度', '温度', '日照时间', '是否有水华']
 
 # 选择所需的列
-data = df[['气温（℃）', '相对湿度（%）', '降雨量（mm）', '风速（km/h）', '光照时长（h）']].values
+data = df[['温度', '相对湿度', '降雨量', '风速', '日照时间']].values
 
 # 数据归一化
 scaler = MinMaxScaler(feature_range=(0, 1))
