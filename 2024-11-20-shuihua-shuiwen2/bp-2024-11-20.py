@@ -4,6 +4,7 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score, classification_report
 import joblib
 from datetime import datetime
+import matplotlib.pyplot as plt
 
 # 使用全量数据训练模型，模型调优
 
@@ -29,20 +30,25 @@ X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=
 
 # 创建并训练BP神经网络模型
 param_grid = {
-    'hidden_layer_sizes': [(50,), (100,), (50, 50)],
+    'hidden_layer_sizes': [(50,), (100,), (50, 50), (200,), (150, 50)],
     'activation': ['relu', 'tanh'],
     'solver': ['adam', 'sgd'],
-    'learning_rate_init': [0.001, 0.01],
-    'alpha': [0.0001, 0.001],
+    'learning_rate_init': [0.0001, 0.001, 0.005],
+    'alpha': [0.0001, 0.001, 0.01],
 }
 
-mlp = GridSearchCV(MLPClassifier(max_iter=1000), param_grid, cv=5)
+mlp = GridSearchCV(MLPClassifier(max_iter=4000, tol=1e-4), param_grid, cv=5)
 mlp.fit(X_train, y_train)
 
 # 预测
 y_pred = mlp.predict(X_test)
 
-
+# 绘制学习曲线
+plt.plot(mlp.best_estimator_.loss_curve_)
+plt.title("Loss Curve")
+plt.xlabel("Iterations")
+plt.ylabel("Loss")
+plt.show()
 
 
 # 评估模型
@@ -56,7 +62,7 @@ print(report)
 # 保存模型
 # 获取当前时间，格式为 YYYYMMDD_HHMMSS
 current_time = datetime.now().strftime('%Y%m%d_%H%M%S')
-joblib.dump(mlp, f'2024-09-05-shuihua-shuiwen/model2/mlp_model{current_time}_acc_{accuracy}.pkl')
+joblib.dump(mlp, f'2024-11-20-shuihua-shuiwen2/model-mlp/mlp_model{current_time}_acc_{accuracy}.pkl')
 
 # 实验结果怎么看
 #               precision    recall  f1-score   support
