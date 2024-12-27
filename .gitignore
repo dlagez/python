@@ -18,3 +18,4 @@ __pycache__
 *.pkl
 *.xls
 *.pdf
+*.doc
