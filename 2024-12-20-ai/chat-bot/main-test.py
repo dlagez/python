@@ -1,7 +1,7 @@
 from extractor import TextExtractor, get_extraction_strategy
-
+import os
 def main():
-    file_path = r'C:\Users\admin\Desktop\03-豆包.pdf'  # 替换为您的文件路径
+    file_path = r'data/ai/发票-90123.2元.pdf'  # 替换为您的文件路径
     strategy = get_extraction_strategy(file_path)
 
     if strategy:

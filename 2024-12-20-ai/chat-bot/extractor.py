@@ -1,5 +1,5 @@
 import os
-from strategies import PdfExtractionStrategy, WordExtractionStrategy, TxtExtractionStrategy
+from strategies import PdfExtractionStrategy, WordExtractionStrategy, TxtExtractionStrategy, WordExtractionStrategyDoc
 
 # 上下文类：文本提取器
 class TextExtractor:
@@ -20,6 +20,8 @@ def get_extraction_strategy(file_path: str):
         return PdfExtractionStrategy()
     elif file_extension == '.docx':
         return WordExtractionStrategy()
+    elif file_extension == '.doc':
+        return WordExtractionStrategyDoc()
     elif file_extension == '.txt':
         return TxtExtractionStrategy()
     else:
