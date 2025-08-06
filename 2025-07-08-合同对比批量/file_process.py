@@ -8,7 +8,7 @@ from openpyxl.utils import get_column_letter
 # 文件名处理脚本
 
 # 顶层目录路径（包含多个项目子目录）
-root_dir = r'D:\Download\dayu5000'  # 替换为你的总目录路径
+root_dir = r'D:\Download\all0804-1000-5000 - 副本'  # 替换为你的总目录路径
 
 # 获取文件夹下所有文件路径
 def get_all_files(directory):

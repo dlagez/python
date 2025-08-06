@@ -8,7 +8,7 @@ from openpyxl.utils import get_column_letter
 # 不需要匹配文件了，合同最终附件列表、合同创建附件列表文件夹下面只有一个文件，把他们做成表格即可。
 
 # 顶层目录路径（包含多个项目子目录）
-root_dir = r'D:\Download\all07164-手动删除部分数据'  # 替换为你的目录路径
+root_dir = r'D:\Download\all0804-1000-5000-2'  # 替换为你的目录路径
 
 # 结果存储
 all_results = []
