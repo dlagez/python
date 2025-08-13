@@ -2,8 +2,8 @@ import pandas as pd
 #合并两个excel
 
 # 读取主表和附表
-attach_df = pd.read_excel(r"d:\Download\all0804-1000-5000 - 副本\项目金额和结算情况2.xlsx")
-main_df= pd.read_excel(r"d:\Download\all0804-1000-5000 - 副本\全量匹配结果(4).xlsx")
+attach_df = pd.read_excel(r"d:\Download\all0804-1000-5000-2\项目金额和结算情况2.xlsx")
+main_df= pd.read_excel(r"d:\Download\all0804-1000-5000-2\全量匹配结果(5).xlsx")
 
 # 去除可能存在的空格和换行，确保匹配稳定
 main_df["合同名称"] = main_df["合同名称"].astype(str).str.strip()
@@ -27,4 +27,4 @@ merged_df = merged_df[cols]
 merged_df.drop(columns=["项目部", "合同金额万"], inplace=True)
 
 # 保存合并后的新文件
-merged_df.to_excel(r"d:\Download\all0804-1000-5000 - 副本\全量匹配结果(5).xlsx", index=False)
+merged_df.to_excel(r"d:\Download\all0804-1000-5000-2\全量匹配结果(6).xlsx", index=False)
