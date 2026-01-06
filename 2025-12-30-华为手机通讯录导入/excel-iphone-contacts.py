@@ -15,6 +15,7 @@ for _, row in df.iterrows():
     name = str(row.get("姓名", "")).strip()
     mobile = str(row.get("手机", "")).strip()
     short = str(row.get("集团短号", "")).strip()
+    office = str(row.get("办公电话", "")).strip()
     dept = str(row.get("部门", "")).strip()
     title = str(row.get("职务", "")).strip()
     gender = str(row.get("性别", "")).strip()
@@ -29,19 +30,20 @@ for _, row in df.iterrows():
         notes.append(f"性别：{gender}")
 
     note_field = "\\n".join(notes)
-
     vcard = f"""BEGIN:VCARD
-VERSION:3.0
-PRODID:-//Apple Inc.//iPhone OS 18.7.2//EN
-N:;{name};;;
-FN:{name}
-ORG:{dept};
-TEL;type=CELL;type=VOICE;type=pref:{mobile}
-"""
+                VERSION:3.0
+                PRODID:-//Apple Inc.//iPhone OS 18.7.2//EN
+                N:;{name};;;
+                FN:{name}
+                ORG:{dept};
+                TEL;type=CELL;type=VOICE;type=pref:{mobile}
+                """
 
     # 第二个号码：集团短号
     if short and short.lower() != "nan":
         vcard += f"TEL;type=CELL;type=VOICE:{short}\n"
+    if office and office.lower() != "nan":
+        vcard += f"TEL;type=WORK;type=VOICE:{office}\n"
 
     if note_field:
         vcard += f"NOTE:{note_field}\n"
